@@ -1,0 +1,56 @@
+@page
+@model WebAppSuporteIA.Pages.MeusChamadosModel
+@{
+    ViewData["Title"] = "Meus Chamados - HELP FAST";
+    Layout = "_LoginLayout";
+}
+
+<div class="dashboard-container">
+    <div class="page-content">
+        <div class="page-header">
+            <h1 class="page-title">Meus Chamados</h1>
+            <button type="button" class="btn btn-back" onclick="window.location.href='/Dashboard'">
+                ← Voltar ao Dashboard
+            </button>
+        </div>
+
+        <div class="tickets-container">
+            @if (Model.Chamados.Any())
+            {
+                <div class="tickets-list">
+                    @foreach (var chamado in Model.Chamados)
+                    {
+                        <div class="ticket-card">
+                            <div class="ticket-header">
+                                <h3 class="ticket-title">@chamado.Titulo</h3>
+                                <span class="ticket-status status-@chamado.Status.ToLower()">@chamado.Status</span>
+                            </div>
+                            <div class="ticket-body">
+                                <p class="ticket-description">@chamado.Descricao</p>
+                                <div class="ticket-meta">
+                                    <span class="ticket-priority">Prioridade: @chamado.Prioridade</span>
+                                    <span class="ticket-date">Criado em: @chamado.DataCriacao.ToString("dd/MM/yyyy")</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="rgba(255,255,255,0.3)"/>
+                        </svg>
+                    </div>
+                    <h3>Nenhum chamado encontrado</h3>
+                    <p>Você ainda não possui chamados. Clique no botão abaixo para criar seu primeiro chamado.</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/NovoChamado'">
+                        Criar Primeiro Chamado
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
