@@ -1,0 +1,86 @@
+@page
+@using WebAppSuporteIA.Models
+@model WebAppSuporteIA.Pages.VerTodosChamadosModel
+@{
+    ViewData["Title"] = "Ver Todos os Chamados";
+    Layout = "_LoginLayout";
+}
+<link rel="stylesheet" href="/css/verchamados.css" />
+<div class="main-flex-center">
+    <div class="chamados-container">
+        <h2 style="text-align:center;">Todos os Chamados</h2>
+        <table class="chamados-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuário</th>
+                    <th>Motivo</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var chamado in Model.Chamados)
+                {
+                    <tr>
+                        <td>@chamado.Id</td>
+                        <td>@chamado.Usuario.Nome</td>
+                        <td>@chamado.Motivo</td>
+                        <td>@chamado.Status</td>
+                        <td>
+                            <button class="btn-white" onclick="verChamado(@chamado.Id)">Ver Chamado</button>
+                            <button class="btn-white" onclick="atribuirChamado(@chamado.Id)">Atribuir Chamado</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="btn-white voltar-menu" onclick="location.href='/Dashboard'">Voltar ao menu</button>
+    </div>
+    <div class="logo-container-centralizada">
+        <div class="logo-text">
+            <span class="logo-help">HELP</span>
+            <span class="logo-fast">FAST</span>
+        </div>
+        <div class="logo-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="white"/>
+            </svg>
+        </div>
+    </div>
+    <!-- Modal de detalhes do chamado -->
+    <div id="modalDetalhes" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal('modalDetalhes')">&times;</span>
+            <h3>Detalhes do Chamado</h3>
+            <div id="detalhesChamado"></div>
+        </div>
+    </div>
+    <!-- Modal de atribuição -->
+    <div id="modalAtribuir" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal('modalAtribuir')">&times;</span>
+            <h3>Atribuir Chamado ao Técnico</h3>
+            <div id="tecnicosList"></div>
+        </div>
+    </div>
+</div>
+<script src="/js/verchamados.js"></script>
+<!-- Modal de detalhes do chamado -->
+<div id="modalDetalhes" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModal('modalDetalhes')">&times;</span>
+        <h3>Detalhes do Chamado</h3>
+        <div id="detalhesChamado"></div>
+    </div>
+</div>
+<!-- Modal de atribuição -->
+<div id="modalAtribuir" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModal('modalAtribuir')">&times;</span>
+        <h3>Atribuir Chamado ao Técnico</h3>
+        <div id="tecnicosList"></div>
+    </div>
+</div>
+<script src="/js/verchamados.js"></script>
+

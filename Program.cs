@@ -5,9 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// Configurar Entity Framework In-Memory
+// Configurar Entity Framework SQL Server
 builder.Services.AddDbContext<WebAppSuporteIA.Data.ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("HelpFastDB"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registrar serviços
 builder.Services.AddScoped<WebAppSuporteIA.Services.IUsuarioService, WebAppSuporteIA.Services.UsuarioService>();

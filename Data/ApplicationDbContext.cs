@@ -10,6 +10,8 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<HistoricoChamado> HistoricoChamados { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,21 +25,41 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Telefone).IsRequired().HasMaxLength(15);
             entity.Property(e => e.Senha).IsRequired().HasMaxLength(255);
-            entity.Property(e => e.TipoUsuario).IsRequired().HasConversion<int>();
-            entity.Property(e => e.DataCriacao).IsRequired();
-            entity.Property(e => e.Ativo).IsRequired();
-
-            // Índice único para email
             entity.HasIndex(e => e.Email).IsUnique();
+            entity.HasOne(e => e.Cargo)
+                .WithMany(c => c.Usuarios)
+                .HasForeignKey(e => e.CargoId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
 
-            // Relacionamento auto-referencial para CriadoPor
-            entity.HasOne(e => e.CriadoPor)
-                  .WithMany()
-                  .HasForeignKey(e => e.CriadoPorId)
-                  .OnDelete(DeleteBehavior.Restrict);
+        // Configuração do modelo Cargo
+        modelBuilder.Entity<Cargo>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Nome).IsRequired().HasMaxLength(20);
+            entity.HasIndex(e => e.Nome).IsUnique();
+        });
+
+        // Configuração do modelo HistoricoChamado
+        modelBuilder.Entity<HistoricoChamado>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Motivo).IsRequired().HasMaxLength(255);
+            entity.Property(e => e.DataAbertura).IsRequired();
+            entity.Property(e => e.Status).IsRequired().HasMaxLength(30);
+            entity.HasOne(e => e.Usuario)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         // Dados iniciais para teste
+        modelBuilder.Entity<Cargo>().HasData(
+            new Cargo { Id = 1, Nome = "Administrador" },
+            new Cargo { Id = 2, Nome = "Tecnico" },
+            new Cargo { Id = 3, Nome = "Cliente" }
+        );
+
         modelBuilder.Entity<Usuario>().HasData(
             new Usuario
             {
@@ -46,10 +68,7 @@ public class ApplicationDbContext : DbContext
                 Email = "admin@helpfast.com",
                 Telefone = "(11) 99999-9999",
                 Senha = "123456", // Em produção, deve ser hash
-                TipoUsuario = UserRole.Administrador,
-                DataCriacao = DateTime.Now,
-                Ativo = true,
-                CriadoPorId = null // Usuário master não foi criado por ninguém
+                CargoId = 1 // Supondo que o cargo Administrador tem Id = 1
             }
         );
     }

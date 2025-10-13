@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using WebAppSuporteIA.Services;
+using static WebAppSuporteIA.Models.UserRoleExtensions;
 
 namespace WebAppSuporteIA.Pages;
 
@@ -38,19 +39,16 @@ public class LoginModel : PageModel
 
         try
         {
-            // Verificar se o usuário existe
+            // Buscar usuário real no banco
             var usuario = await _usuarioService.ObterPorEmailAsync(Email);
-            
             if (usuario == null)
             {
                 ModelState.AddModelError("", "Usuário não encontrado. Verifique o e-mail informado.");
                 return Page();
             }
 
-            // Validar credenciais
-            var loginValido = await _usuarioService.ValidarLoginAsync(Email, Password);
-            
-            if (!loginValido)
+            // Validar credenciais reais
+            if (usuario.Senha != Password)
             {
                 ModelState.AddModelError("", "Senha incorreta. Tente novamente.");
                 return Page();
@@ -58,12 +56,12 @@ public class LoginModel : PageModel
 
             // Atualizar último login
             await _usuarioService.AtualizarUltimoLoginAsync(usuario.Id);
-            
-            // TODO: Implementar sistema de sessão/cookies
-            // Por enquanto, armazenar dados na TempData
+
+            // Armazenar dados na TempData
             TempData["UserId"] = usuario.Id;
             TempData["UserName"] = usuario.Nome;
             TempData["UserEmail"] = usuario.Email;
+            TempData["UserType"] = usuario.Cargo.Nome;
 
             return RedirectToPage("/Dashboard");
         }

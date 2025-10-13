@@ -29,9 +29,12 @@ public class DashboardModel : PageModel
             if (usuario != null)
             {
                 UserName = usuario.Nome;
-                UserType = usuario.TipoUsuario;
-                UserTypeDisplay = usuario.TipoUsuarioDisplay;
-                UserTypeDescription = usuario.TipoUsuarioDescription;
+                    if (Enum.TryParse<UserRole>(usuario.Cargo.Nome, out var role))
+                    {
+                        UserType = role;
+                    }
+                    UserTypeDisplay = usuario.Cargo.Nome;
+                    UserTypeDescription = ""; // Assuming you want to clear this or set it to something else
             }
         }
         else

@@ -1,0 +1,580 @@
+
+body {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100vw;
+}
+
+.main-flex-center {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+
+.chamados-container {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 90vw;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    margin: 48px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chamados-table {
+    width: 100%;
+    max-width: 850px;
+    font-size: 1.15rem;
+    margin: 0 auto 32px auto;
+    border-collapse: collapse;
+    background: transparent;
+}
+.chamados-table th, .chamados-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2a3140;
+    text-align: left;
+}
+.chamados-table th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 600;
+}
+.chamados-table tr:last-child td {
+    border-bottom: none;
+}
+
+.btn-white {
+    background: #fff;
+    color: #1a2332;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 32px auto 0 auto;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    display: block;
+}
+.btn-white:hover {
+    background: #e5e8ef;
+    color: #0f1419;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 0;
+    position: fixed;
+    left: 0;
+    bottom: 32px;
+    z-index: 10;
+}
+.logo-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.logo-icon {
+    margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+    .chamados-container {
+        max-width: 98vw;
+        padding: 18px 4vw 18px 4vw;
+    }
+    .chamados-table {
+        font-size: 1rem;
+        max-width: 98vw;
+    }
+    .logo-text {
+        font-size: 1.5rem;
+    }
+}
+
+.main-content {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chamados-container {
+    background: linear-gradient(180deg, #182233 0%, #1a2332 100%);
+    color: #fff;
+    padding: 40px 32px 32px 32px;
+    border-radius: 18px;
+    max-width: 900px;
+    width: 95vw;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 48px auto 0 auto;
+}
+
+.chamados-table {
+    width: 100%;
+    max-width: 850px;
+    font-size: 1.15rem;
+    border-collapse: collapse;
+    background: transparent;
+    margin-bottom: 32px;
+}
+.chamados-table th, .chamados-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #263043;
+    text-align: left;
+}
+.chamados-table th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.chamados-table tr:last-child td {
+    border-bottom: none;
+}
+
+.btn-white {
+    background: #fff;
+    color: #1a2332;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top: 32px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    display: block;
+}
+.btn-white:hover {
+    background: #e5e8ef;
+    color: #0f1419;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 56px;
+    margin-bottom: 0;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+}
+.logo-text {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.logo-icon {
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .chamados-container {
+        max-width: 98vw;
+        padding: 18px 4vw 18px 4vw;
+    }
+    .chamados-table {
+        font-size: 1rem;
+        max-width: 98vw;
+    }
+    .logo-text {
+        font-size: 1.5rem;
+    }
+}
+    .chamados-container {
+        max-width: 98vw;
+        padding: 18px 4vw 18px 4vw;
+    }
+    .chamados-table {
+        font-size: 1rem;
+        max-width: 98vw;
+    }
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+body {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100vw;
+}
+.chamados-container,
+.chamados-container-large {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    margin: 48px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.chamados-table,
+.chamados-table-large {
+    width: 100%;
+    max-width: 850px;
+    font-size: 1.15rem;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: transparent;
+}
+.chamados-table th, .chamados-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2a3140;
+    text-align: left;
+}
+.chamados-table th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 600;
+}
+.chamados-table tr:last-child td {
+    border-bottom: none;
+}
+.btn-white {
+    background: #fff;
+    color: #1a2332;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-white:hover {
+    background: #e5e8ef;
+    color: #0f1419;
+}
+.voltar-menu {
+    display: block;
+    margin: 32px auto 0 auto;
+}
+.voltar-menu-large {
+    font-size: 1.15rem;
+    padding: 16px 48px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 0;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+}
+.logo-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+}
+.logo-icon {
+    margin-top: 8px;
+}
+.main-flex-center, body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+.chamados-container,
+.chamados-container-large {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.voltar-menu-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0 0 0;
+}
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 0;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+}
+.main-flex-center {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+.chamados-container,
+.chamados-container-large {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    max-width: 1100px;
+    width: 90vw;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    margin: 0 auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.voltar-menu-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0 0 0;
+}
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 0;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+}
+.voltar-menu-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: fixed;
+    left: 0;
+    bottom: 32px;
+    z-index: 10;
+}
+.logo-container-centralizada {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 64px;
+    margin-bottom: 0;
+    position: fixed;
+    left: 0;
+    bottom: 32px;
+    z-index: 10;
+}
+.chamados-container-large {
+    .main-flex-center {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100vw;
+    }
+    .chamados-container,
+    .chamados-container-large {
+        background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+        color: #fff;
+        padding: 32px;
+        border-radius: 12px;
+        max-width: 1100px;
+        width: 90vw;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+        margin: 48px auto 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .voltar-menu-wrapper {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 32px 0 32px 0;
+    }
+    .logo-container-centralizada {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0;
+        margin-bottom: 0;
+        position: relative;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+    }
+.logo-icon {
+    margin-top: 8px;
+}
+.chamados-container {
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+.chamados-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    background: transparent;
+}
+.chamados-table th, .chamados-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2a3140;
+    text-align: left;
+}
+.chamados-table th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 600;
+}
+.chamados-table tr:last-child td {
+    border-bottom: none;
+}
+.btn-white {
+    background: #fff;
+    color: #1a2332;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-white:hover {
+    background: #e5e8ef;
+    color: #0f1419;
+}
+.voltar-menu {
+    display: block;
+    margin: 32px auto 0 auto;
+}
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,20,25,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: #1a2332;
+    color: #fff;
+    padding: 32px 24px;
+    border-radius: 10px;
+    min-width: 320px;
+    max-width: 400px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    position: relative;
+}
+.close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+}
+}

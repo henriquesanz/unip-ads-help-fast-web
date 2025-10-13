@@ -1,0 +1,124 @@
+@page
+@model GerenciarUsuariosModel
+@{
+    ViewData["Title"] = "Gerenciar Usuários";
+    Layout = "_LoginLayout";
+}
+
+<div class="gerenciar-usuarios-container">
+    <h2>Gerenciar Usuários</h2>
+    <div class="usuarios-lista">
+        <h3>Clientes</h3>
+        <ul>
+            @foreach (var usuario in Model.Clientes)
+            {
+                <li>
+                    @usuario.Nome (@usuario.Email)
+                    <button type="button" class="btn-branco btn-sm" onclick="abrirModalEditar(@usuario.Id, '@usuario.Nome', '@usuario.Email', '@usuario.Telefone')">Editar</button>
+                    <button type="button" class="btn-branco btn-sm" onclick="abrirModalExcluir(@usuario.Id, '@usuario.Nome')">Excluir</button>
+                </li>
+            }
+        </ul>
+        <h3>Técnicos</h3>
+        <ul>
+            @foreach (var tecnico in Model.Tecnicos)
+            {
+                <li>
+                    @tecnico.Nome (@tecnico.Email)
+                    <button type="button" class="btn-branco btn-sm" onclick="abrirModalEditar(@tecnico.Id, '@tecnico.Nome', '@tecnico.Email', '@tecnico.Telefone')">Editar</button>
+                    <button type="button" class="btn-branco btn-sm" onclick="abrirModalExcluir(@tecnico.Id, '@tecnico.Nome')">Excluir</button>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="botoes-gerenciar">
+        <form method="get" asp-page="/Dashboard">
+            <button type="submit" class="btn-branco">Voltar ao menu</button>
+        </form>
+        <button type="button" class="btn-branco" onclick="document.getElementById('modalNovoTecnico').style.display='block'">Novo Técnico</button>
+    </div>
+    <div id="modalNovoTecnico" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('modalNovoTecnico').style.display='none'">&times;</span>
+            @if (TempData["UserType"]?.ToString()?.Equals("Admin", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                <form method="post">
+                    <h3>Registrar Novo Técnico</h3>
+                    <input asp-for="Nome" type="text" placeholder="Nome" required />
+                    <input asp-for="Email" type="email" placeholder="Email" required />
+                    <input asp-for="Telefone" type="text" placeholder="Telefone" required />
+                    <input asp-for="Senha" type="password" placeholder="Senha" required />
+                    <button type="submit" class="btn-branco">Registrar</button>
+                </form>
+            }
+            else
+            {
+                <div class="mensagem-sucesso">Apenas administradores podem registrar um técnico.</div>
+            }
+        </div>
+    </div>
+    @if (Model.MensagemSucesso != null)
+    {
+        <div class="mensagem-sucesso">@Model.MensagemSucesso</div>
+    }
+</div>
+
+<link rel="stylesheet" href="~/css/gerenciarusuarios.css" />
+<script>
+// Fecha modal ao clicar fora
+window.onclick = function(event) {
+    var modal = document.getElementById('modalNovoTecnico');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    var modalEditar = document.getElementById('modalEditarUsuario');
+    if (modalEditar && event.target == modalEditar) {
+        modalEditar.style.display = "none";
+    }
+    var modalExcluir = document.getElementById('modalExcluirUsuario');
+    if (modalExcluir && event.target == modalExcluir) {
+        modalExcluir.style.display = "none";
+    }
+}
+
+function abrirModalEditar(id, nome, email, telefone) {
+    document.getElementById('modalEditarUsuario').style.display = 'block';
+    document.getElementById('editId').value = id;
+    document.getElementById('editNome').value = nome;
+    document.getElementById('editEmail').value = email;
+    document.getElementById('editTelefone').value = telefone;
+}
+function abrirModalExcluir(id, nome) {
+    document.getElementById('modalExcluirUsuario').style.display = 'block';
+    document.getElementById('deleteId').value = id;
+    document.getElementById('deleteNome').innerText = nome;
+}
+</script>
+
+<!-- Modal Editar Usuário -->
+<div id="modalEditarUsuario" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('modalEditarUsuario').style.display='none'">&times;</span>
+        <form method="post" asp-page-handler="Edit">
+            <h3>Editar Usuário</h3>
+            <input type="hidden" id="editId" name="EditId" />
+            <input type="text" id="editNome" name="EditNome" placeholder="Nome" required />
+            <input type="email" id="editEmail" name="EditEmail" placeholder="Email" required />
+            <input type="text" id="editTelefone" name="EditTelefone" placeholder="Telefone" required />
+            <button type="submit" class="btn-branco">Salvar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Excluir Usuário -->
+<div id="modalExcluirUsuario" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('modalExcluirUsuario').style.display='none'">&times;</span>
+        <form method="post" asp-page-handler="Delete">
+            <h3>Excluir Usuário</h3>
+            <input type="hidden" id="deleteId" name="DeleteId" />
+            <p>Tem certeza que deseja excluir <span id="deleteNome"></span>?</p>
+            <button type="submit" class="btn-branco">Confirmar Exclusão</button>
+        </form>
+    </div>
+</div>

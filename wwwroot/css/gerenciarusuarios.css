@@ -1,0 +1,112 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.gerenciar-usuarios-container {
+    background: rgba(20, 28, 44, 0.95);
+    color: #fff;
+    padding: 48px 56px;
+    border-radius: 16px;
+    max-width: 1000px;
+    min-width: 400px;
+    margin: 80px auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+.usuarios-lista h3 {
+    margin-top: 24px;
+    color: #fff;
+    font-weight: 600;
+}
+.usuarios-lista ul {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+.usuarios-lista li {
+    padding: 8px 0;
+    border-bottom: 1px solid #23304a;
+    font-size: 1.1em;
+}
+.usuarios-lista li:last-child {
+    border-bottom: none;
+}
+.botoes-gerenciar {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    justify-content: center;
+}
+.btn-branco {
+    background: #fff;
+    color: #1a2332;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 28px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s, color 0.2s;
+}
+.btn-branco:hover {
+    background: #e6e6e6;
+    color: #0f1419;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #1a2332;
+    margin: 10% auto;
+    padding: 32px;
+    border-radius: 10px;
+    width: 350px;
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    position: relative;
+}
+.close {
+    color: #fff;
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.mensagem-sucesso {
+    background: #fff;
+    color: #1a2332;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 24px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.modal-content input {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #23304a;
+    background: #fff;
+    color: #1a2332;
+    font-size: 1em;
+}
+.modal-content button {
+    width: 100%;
+}

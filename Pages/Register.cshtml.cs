@@ -69,8 +69,7 @@ public class RegisterModel : PageModel
                 Email = Email,
                 Telefone = Phone,
                 Senha = Password, // TODO: Implementar hash da senha
-                DataCriacao = DateTime.Now,
-                Ativo = true
+                    // Removido DataCriacao e Ativo, não existem mais no model
             };
 
             await _usuarioService.CriarClienteAsync(novoCliente);

@@ -33,11 +33,12 @@
 }
 
 .user-type-info {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    margin: 10px 0 0 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.6rem;
+    margin: 16px 0 0 0;
     text-align: center;
-    font-weight: 400;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 /* Botões de Ação */
@@ -235,15 +236,31 @@
     margin-bottom: 8px;
 }
 
+
 .ticket-form .form-control {
     width: 100%;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(30, 45, 60, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 10px;
-    color: white;
+    color: #fff;
     font-size: 16px;
     transition: all 0.3s ease;
+}
+
+.ticket-form select.form-control {
+    background: rgba(30, 45, 60, 0.95);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 15px;
+    appearance: none;
+}
+
+.ticket-form select.form-control option {
+    background: #1e2d3c;
+    color: #fff;
 }
 
 .ticket-form .form-control::placeholder {
