@@ -550,3 +550,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+
+appsettings.json
+appsettings.*.json
+wwwroot/

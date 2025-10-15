@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using WebAppSuporteIA.Data;
+using WebAppSuporteIA.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,18 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Configurar Entity Framework SQL Server
-builder.Services.AddDbContext<WebAppSuporteIA.Data.ApplicationDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registrar serviços
-builder.Services.AddScoped<WebAppSuporteIA.Services.IUsuarioService, WebAppSuporteIA.Services.UsuarioService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();
 
 // Inicializar banco de dados em memória
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<WebAppSuporteIA.Data.ApplicationDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
 }
 

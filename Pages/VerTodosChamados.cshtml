@@ -24,7 +24,7 @@
                 {
                     <tr>
                         <td>@chamado.Id</td>
-                        <td>@chamado.Usuario.Nome</td>
+                        <td>@chamado.Cliente?.Nome</td>
                         <td>@chamado.Motivo</td>
                         <td>@chamado.Status</td>
                         <td>
@@ -64,23 +64,44 @@
             <div id="tecnicosList"></div>
         </div>
     </div>
+    <table class="historico-table">
+        <thead>
+            <tr>
+                <th>Motivo</th>
+                <th>Status</th>
+                <th>Ação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.HistoricoChamados)
+            {
+                <tr>
+                    <td>@item.Chamado?.Motivo</td>
+                    <td>@item.Chamado?.Status</td>
+                    <td>@item.Acao</td>
+                    <td>@item.Data.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <script src="/js/verchamados.js"></script>
-<!-- Modal de detalhes do chamado -->
-<div id="modalDetalhes" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close" onclick="fecharModal('modalDetalhes')">&times;</span>
-        <h3>Detalhes do Chamado</h3>
-        <div id="detalhesChamado"></div>
-    </div>
-</div>
-<!-- Modal de atribuição -->
-<div id="modalAtribuir" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close" onclick="fecharModal('modalAtribuir')">&times;</span>
-        <h3>Atribuir Chamado ao Técnico</h3>
-        <div id="tecnicosList"></div>
-    </div>
-</div>
-<script src="/js/verchamados.js"></script>
+            <th>Status</th>
+            <th>Ação</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HistoricoChamados)
+        {
+            <tr>
+                <td>@item.Chamado.Motivo</td>
+                <td>@item.Chamado.Status</td>
+                <td>@item.Acao</td>
+                <td>@item.Data.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
 

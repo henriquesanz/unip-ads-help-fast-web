@@ -11,13 +11,21 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Chamado> Chamados { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
         public DbSet<HistoricoChamado> HistoricoChamados { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Usuario>().ToTable("Usuarios", "dbo");
+        modelBuilder.Entity<Cargo>().ToTable("Cargos", "dbo");
+        modelBuilder.Entity<Chamado>().ToTable("Chamados", "dbo");
+        modelBuilder.Entity<Chat>().ToTable("Chats", "dbo");
+        modelBuilder.Entity<Faq>().ToTable("Faqs", "dbo");
+        modelBuilder.Entity<HistoricoChamado>().ToTable("HistoricoChamados", "dbo");
 
-        // Configuração do modelo Usuario
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -32,7 +40,6 @@ public class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        // Configuração do modelo Cargo
         modelBuilder.Entity<Cargo>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -40,17 +47,16 @@ public class ApplicationDbContext : DbContext
             entity.HasIndex(e => e.Nome).IsUnique();
         });
 
-        // Configuração do modelo HistoricoChamado
+        // Remover configuração inválida de HistoricoChamado
         modelBuilder.Entity<HistoricoChamado>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Motivo).IsRequired().HasMaxLength(255);
-            entity.Property(e => e.DataAbertura).IsRequired();
-            entity.Property(e => e.Status).IsRequired().HasMaxLength(30);
-            entity.HasOne(e => e.Usuario)
+            entity.Property(e => e.Acao).IsRequired().HasMaxLength(255);
+            entity.Property(e => e.Data).IsRequired();
+            entity.HasOne(e => e.Chamado)
                 .WithMany()
-                .HasForeignKey(e => e.UsuarioId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(e => e.ChamadoId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // Dados iniciais para teste
@@ -60,6 +66,10 @@ public class ApplicationDbContext : DbContext
             new Cargo { Id = 3, Nome = "Cliente" }
         );
 
+        // Hash da senha "123456"
+        var senhaHash = "8d969eef6ecad3c29a3a629280e686cff8fab2e" +
+                        "ffb7bafee9c7e7f2afc7f5b8e6"; // SHA256 em hexadecimal
+
         modelBuilder.Entity<Usuario>().HasData(
             new Usuario
             {
@@ -67,8 +77,8 @@ public class ApplicationDbContext : DbContext
                 Nome = "Administrador Master",
                 Email = "admin@helpfast.com",
                 Telefone = "(11) 99999-9999",
-                Senha = "123456", // Em produção, deve ser hash
-                CargoId = 1 // Supondo que o cargo Administrador tem Id = 1
+                Senha = senhaHash,
+                CargoId = 1
             }
         );
     }

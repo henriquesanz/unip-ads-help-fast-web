@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using WebAppSuporteIA.Models;
 using WebAppSuporteIA.Data;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace WebAppSuporteIA.Services
 {
@@ -27,6 +29,7 @@ namespace WebAppSuporteIA.Services
 
         public async Task<Usuario> CriarUsuarioAsync(Usuario usuario)
         {
+            usuario.Senha = HashSenha(usuario.Senha);
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
             return usuario;
@@ -37,12 +40,19 @@ namespace WebAppSuporteIA.Services
             var usuario = await ObterPorEmailAsync(email);
             if (usuario == null)
                 return false;
-            return usuario.Senha == senha;
+            // Gere o hash da senha informada e compare com o hash salvo
+            var senhaHash = HashSenha(senha);
+            return usuario.Senha == senhaHash;
         }
 
         public async Task AtualizarUltimoLoginAsync(int usuarioId)
         {
-            await Task.CompletedTask;
+            var usuario = await _context.Usuarios.FindAsync(usuarioId);
+            if (usuario != null)
+            {
+                usuario.UltimoLogin = DateTime.Now;
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> EmailExisteAsync(string email)
@@ -71,7 +81,7 @@ namespace WebAppSuporteIA.Services
 
         public async Task<Usuario> CriarAdministradorAsync(Usuario administrador, int criadoPorId)
         {
-            administrador.CargoId = await ObterCargoIdPorNomeAsync("Administrador");
+            administrador.CargoId = await ObterCargoIdPorNomeAsync("Admin");
             return await CriarUsuarioAsync(administrador);
         }
 
@@ -93,6 +103,45 @@ namespace WebAppSuporteIA.Services
         public async Task<List<HistoricoChamado>> ListarHistoricoChamadosAsync()
         {
             return await _context.HistoricoChamados.ToListAsync();
+        }
+
+        public async Task<List<Usuario>> ListarTecnicosAsync()
+        {
+            return await _context.Usuarios.Include(u => u.Cargo)
+                .Where(u => u.Cargo.Nome == "Tecnico")
+                .OrderBy(u => u.Nome)
+                .ToListAsync();
+        }
+
+        public async Task<Usuario?> EditarTecnicoAsync(int tecnicoId, Usuario dadosAtualizados)
+        {
+            var tecnico = await _context.Usuarios.FindAsync(tecnicoId);
+            if (tecnico == null || tecnico.Cargo.Nome != "Tecnico") return null;
+            tecnico.Nome = dadosAtualizados.Nome;
+            tecnico.Email = dadosAtualizados.Email;
+            tecnico.Senha = HashSenha(dadosAtualizados.Senha);
+            tecnico.Telefone = dadosAtualizados.Telefone;
+            await _context.SaveChangesAsync();
+            return tecnico;
+        }
+
+        public async Task<bool> ExcluirTecnicoAsync(int tecnicoId)
+        {
+            var tecnico = await _context.Usuarios.FindAsync(tecnicoId);
+            if (tecnico == null || tecnico.Cargo.Nome != "Tecnico") return false;
+            _context.Usuarios.Remove(tecnico);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        private string HashSenha(string senha)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(senha);
+                var hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
         }
     }
 }

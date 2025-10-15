@@ -12,8 +12,8 @@ using WebAppSuporteIA.Data;
 namespace WebAppSuporteIA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251013205346_SeedCargosAndAdminUser")]
-    partial class SeedCargosAndAdminUser
+    [Migration("20251015035622_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace WebAppSuporteIA.Migrations
                     b.HasIndex("Nome")
                         .IsUnique();
 
-                    b.ToTable("Cargos");
+                    b.ToTable("Cargos", "dbo");
 
                     b.HasData(
                         new
@@ -63,13 +63,16 @@ namespace WebAppSuporteIA.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebAppSuporteIA.Models.HistoricoChamado", b =>
+            modelBuilder.Entity("WebAppSuporteIA.Models.Chamado", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataAbertura")
                         .HasColumnType("datetime2");
@@ -79,22 +82,97 @@ namespace WebAppSuporteIA.Migrations
 
                     b.Property<string>("Motivo")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int?>("TecnicoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("ClienteId");
 
-                    b.ToTable("HistoricoChamados");
+                    b.HasIndex("TecnicoId");
+
+                    b.ToTable("Chamados", "dbo");
+                });
+
+            modelBuilder.Entity("WebAppSuporteIA.Models.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChamadoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataEnvio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EnviadoPorCliente")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Mensagem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChamadoId");
+
+                    b.ToTable("Chats", "dbo");
+                });
+
+            modelBuilder.Entity("WebAppSuporteIA.Models.Faq", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Pergunta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Resposta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Faqs", "dbo");
+                });
+
+            modelBuilder.Entity("WebAppSuporteIA.Models.HistoricoChamado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Acao")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("ChamadoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChamadoId");
+
+                    b.ToTable("HistoricoChamados", "dbo");
                 });
 
             modelBuilder.Entity("WebAppSuporteIA.Models.Usuario", b =>
@@ -128,6 +206,9 @@ namespace WebAppSuporteIA.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<DateTime?>("UltimoLogin")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CargoId");
@@ -135,7 +216,7 @@ namespace WebAppSuporteIA.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", "dbo");
 
                     b.HasData(
                         new
@@ -144,20 +225,48 @@ namespace WebAppSuporteIA.Migrations
                             CargoId = 1,
                             Email = "admin@helpfast.com",
                             Nome = "Administrador Master",
-                            Senha = "123456",
+                            Senha = "8d969eef6ecad3c29a3a629280e686cff8fab2effb7bafee9c7e7f2afc7f5b8e6",
                             Telefone = "(11) 99999-9999"
                         });
                 });
 
-            modelBuilder.Entity("WebAppSuporteIA.Models.HistoricoChamado", b =>
+            modelBuilder.Entity("WebAppSuporteIA.Models.Chamado", b =>
                 {
-                    b.HasOne("WebAppSuporteIA.Models.Usuario", "Usuario")
+                    b.HasOne("WebAppSuporteIA.Models.Usuario", "Cliente")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.HasOne("WebAppSuporteIA.Models.Usuario", "Tecnico")
+                        .WithMany()
+                        .HasForeignKey("TecnicoId");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Tecnico");
+                });
+
+            modelBuilder.Entity("WebAppSuporteIA.Models.Chat", b =>
+                {
+                    b.HasOne("WebAppSuporteIA.Models.Chamado", "Chamado")
+                        .WithMany()
+                        .HasForeignKey("ChamadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chamado");
+                });
+
+            modelBuilder.Entity("WebAppSuporteIA.Models.HistoricoChamado", b =>
+                {
+                    b.HasOne("WebAppSuporteIA.Models.Chamado", "Chamado")
+                        .WithMany()
+                        .HasForeignKey("ChamadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chamado");
                 });
 
             modelBuilder.Entity("WebAppSuporteIA.Models.Usuario", b =>
