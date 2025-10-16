@@ -1,62 +1,41 @@
 @page
+@using WebAppSuporteIA.Models
 @model WebAppSuporteIA.Pages.DashboardModel
 @{
-    ViewData["Title"] = "Dashboard - HELP FAST";
+    ViewData["Title"] = "Dashboard";
     Layout = "_LoginLayout";
+    var usuario = Model.Usuario;
 }
 
-<div class="dashboard-container">
-    <div class="dashboard-content">
-        <!-- Mensagem de Boas-vindas -->
-        <div class="welcome-section">
-            <h1 class="welcome-message">Seja bem vindo, @Model.UserName</h1>
-            <p class="user-type-info">@Model.UserTypeDisplay - @Model.UserTypeDescription</p>
+<div class="main-flex-center">
+    <div class="dashboard-container">
+        <h2 style="text-align:center;">Seja bem vindo, @usuario.Nome</h2>
+        <h3 style="text-align:center;">@usuario.Cargo.Nome</h3>
+        @if (usuario.Cargo.Nome == "Administrador")
+        {
+            <button class="btn-white" onclick="location.href='/GerenciarChamados'">Gerenciar Chamados</button>
+            <button class="btn-white" onclick="location.href='/GerenciarTecnicos'">Gerenciar Técnicos</button>
+        }
+        else if (usuario.Cargo.Nome == "Tecnico")
+        {
+            <button class="btn-white" onclick="location.href='/VerChamados'">Ver Chamados</button>
+            <button class="btn-white" onclick="location.href='/ChamadosEmAberto'">Chamados em Aberto</button>
+        }
+        else if (usuario.Cargo.Nome == "Cliente")
+        {
+            <button class="btn-white" onclick="location.href='/NovoChamado'">Solicitar novo Chamado</button>
+            <button class="btn-white" onclick="location.href='/MeusChamados'">Meus Chamados</button>
+        }
+    </div>
+    <div class="logo-container-centralizada">
+        <div class="logo-text">
+            <span class="logo-help">HELP</span>
+            <span class="logo-fast">FAST</span>
         </div>
-
-        <!-- Botões de Ação -->
-        <div class="action-buttons">
-            @if (Model.UserType == WebAppSuporteIA.Models.UserRole.Cliente)
-            {
-                <button type="button" class="btn btn-action" onclick="window.location.href='/NovoChamado'">
-                    Solicitar novo Chamado
-                </button>
-                
-                <button type="button" class="btn btn-action" onclick="window.location.href='/MeusChamados'">
-                    Meus Chamados
-                </button>
-            }
-            else if (Model.UserType == WebAppSuporteIA.Models.UserRole.Tecnico)
-            {
-                <button type="button" class="btn btn-action" onclick="window.location.href='/VerTodosChamados'">
-                    Ver Todos os Chamados
-                </button>
-                
-                <button type="button" class="btn btn-action" onclick="window.location.href='/ChamadosAtribuidos'">
-                    Meus Chamados Atribuídos
-                </button>
-            }
-            else if (Model.UserType == WebAppSuporteIA.Models.UserRole.Admin)
-            {
-                <button type="button" class="btn btn-action" onclick="window.location.href='/GerenciarUsuarios'">
-                    Gerenciar Usuários
-                </button>
-                <button type="button" class="btn btn-action" onclick="window.location.href='/VerTodosChamados'">
-                    Ver Todos os Chamados
-                </button>
-            }
-        </div>
-
-        <!-- Logo HELP FAST -->
-        <div class="logo-container">
-            <div class="logo-text">
-                <span class="logo-help">HELP</span>
-                <span class="logo-fast">FAST</span>
-            </div>
-            <div class="logo-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="white"/>
-                </svg>
-            </div>
+        <div class="logo-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="white"/>
+            </svg>
         </div>
     </div>
 </div>

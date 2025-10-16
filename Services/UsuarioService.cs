@@ -81,7 +81,7 @@ namespace WebAppSuporteIA.Services
 
         public async Task<Usuario> CriarAdministradorAsync(Usuario administrador, int criadoPorId)
         {
-            administrador.CargoId = await ObterCargoIdPorNomeAsync("Admin");
+            administrador.CargoId = await ObterCargoIdPorNomeAsync("Administrador");
             return await CriarUsuarioAsync(administrador);
         }
 

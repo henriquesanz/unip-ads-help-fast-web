@@ -12,14 +12,12 @@ namespace WebAppSuporteIA.Pages
         private readonly IUsuarioService _usuarioService;
         public List<Usuario> Clientes { get; set; } = new();
         public List<Usuario> Tecnicos { get; set; } = new();
-        [BindProperty]
-        public string Nome { get; set; } = string.Empty;
-        [BindProperty]
-        public string Email { get; set; } = string.Empty;
-        [BindProperty]
-        public string Telefone { get; set; } = string.Empty;
-        [BindProperty]
-        public string Senha { get; set; } = string.Empty;
+
+        [BindProperty] public string Nome { get; set; } = string.Empty;
+        [BindProperty] public string Email { get; set; } = string.Empty;
+        [BindProperty] public string Telefone { get; set; } = string.Empty;
+        [BindProperty] public string Senha { get; set; } = string.Empty;
+        public string? Mensagem { get; set; }
         public string? MensagemSucesso { get; set; }
 
         public GerenciarUsuariosModel(IUsuarioService usuarioService)
@@ -37,10 +35,10 @@ namespace WebAppSuporteIA.Pages
         {
             var tipoUsuario = TempData["UserType"]?.ToString();
             var userId = TempData["UserId"]?.ToString();
-            // Só permite se for exatamente 'Administrador' (case-insensitive)
+
             if (string.IsNullOrEmpty(tipoUsuario) || !tipoUsuario.Equals("Administrador", System.StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(userId))
             {
-                MensagemSucesso = "Apenas administradores podem registrar um técnico. Faça login como administrador para continuar.";
+                MensagemSucesso = "Apenas administradores podem registrar um técnico.";
                 await OnGetAsync();
                 return Page();
             }
@@ -59,7 +57,7 @@ namespace WebAppSuporteIA.Pages
             try
             {
                 await _usuarioService.CriarTecnicoAsync(tecnico, adminId);
-                MensagemSucesso = "Técnico registrado com sucesso";
+                MensagemSucesso = "Técnico registrado com sucesso!";
             }
             catch (System.ArgumentException ex)
             {
@@ -67,8 +65,9 @@ namespace WebAppSuporteIA.Pages
             }
             catch
             {
-                MensagemSucesso = "Erro ao registrar técnico. Tente novamente ou verifique os dados.";
+                MensagemSucesso = "Erro ao registrar técnico. Verifique os dados e tente novamente.";
             }
+
             await OnGetAsync();
             return Page();
         }

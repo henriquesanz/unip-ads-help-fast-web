@@ -165,7 +165,7 @@ namespace WebAppSuporteIA.Migrations
                 schema: "dbo",
                 table: "Usuarios",
                 columns: new[] { "Id", "CargoId", "Email", "Nome", "Senha", "Telefone", "UltimoLogin" },
-                values: new object[] { 1, 1, "admin@helpfast.com", "Administrador Master", "8d969eef6ecad3c29a3a629280e686cff8fab2effb7bafee9c7e7f2afc7f5b8e6", "(11) 99999-9999", null });
+                values: new object[] { 1, 1, "admin@helpfast.com", "Administrador Master", "jZae72+kaOmKs9oGzww/XVgGfQDUZbZVQYhU5h0hQqk=", "(11) 99999-9999", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cargos_Nome",

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppSuporteIA.Models
 {
-    [Table("Usuarios", Schema = "dbo")]
     public class Usuario
     {
         [Key]

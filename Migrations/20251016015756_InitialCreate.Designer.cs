@@ -12,7 +12,7 @@ using WebAppSuporteIA.Data;
 namespace WebAppSuporteIA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251015035622_InitialCreate")]
+    [Migration("20251016015756_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -225,7 +225,7 @@ namespace WebAppSuporteIA.Migrations
                             CargoId = 1,
                             Email = "admin@helpfast.com",
                             Nome = "Administrador Master",
-                            Senha = "8d969eef6ecad3c29a3a629280e686cff8fab2effb7bafee9c7e7f2afc7f5b8e6",
+                            Senha = "jZae72+kaOmKs9oGzww/XVgGfQDUZbZVQYhU5h0hQqk=",
                             Telefone = "(11) 99999-9999"
                         });
                 });

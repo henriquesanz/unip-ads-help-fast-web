@@ -1,10 +1,8 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppSuporteIA.Models
 {
-    [Table("Chamados", Schema = "dbo")]
     public class Chamado
     {
         [Key]

@@ -15,16 +15,18 @@ public class ApplicationDbContext : DbContext
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<HistoricoChamado> HistoricoChamados { get; set; }
+        public DbSet<ChatIaResult> ChatIaResults { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Usuario>().ToTable("Usuarios", "dbo");
-        modelBuilder.Entity<Cargo>().ToTable("Cargos", "dbo");
-        modelBuilder.Entity<Chamado>().ToTable("Chamados", "dbo");
-        modelBuilder.Entity<Chat>().ToTable("Chats", "dbo");
-        modelBuilder.Entity<Faq>().ToTable("Faqs", "dbo");
-        modelBuilder.Entity<HistoricoChamado>().ToTable("HistoricoChamados", "dbo");
+        modelBuilder.Entity<Usuario>().ToTable("Usuarios");
+        modelBuilder.Entity<Cargo>().ToTable("Cargos");
+        modelBuilder.Entity<Chamado>().ToTable("Chamados");
+        modelBuilder.Entity<Chat>().ToTable("Chats");
+        modelBuilder.Entity<Faq>().ToTable("Faqs");
+        modelBuilder.Entity<HistoricoChamado>().ToTable("HistoricoChamados");
+        modelBuilder.Entity<ChatIaResult>().ToTable("ChatIaResults");
 
         modelBuilder.Entity<Usuario>(entity =>
         {
@@ -66,9 +68,8 @@ public class ApplicationDbContext : DbContext
             new Cargo { Id = 3, Nome = "Cliente" }
         );
 
-        // Hash da senha "123456"
-        var senhaHash = "8d969eef6ecad3c29a3a629280e686cff8fab2e" +
-                        "ffb7bafee9c7e7f2afc7f5b8e6"; // SHA256 em hexadecimal
+        // Hash da senha "123456" em Base64
+        var senhaHash = "jZae72+kaOmKs9oGzww/XVgGfQDUZbZVQYhU5h0hQqk=";
 
         modelBuilder.Entity<Usuario>().HasData(
             new Usuario
@@ -78,7 +79,7 @@ public class ApplicationDbContext : DbContext
                 Email = "admin@helpfast.com",
                 Telefone = "(11) 99999-9999",
                 Senha = senhaHash,
-                CargoId = 1
+                CargoId = 1 // Cargo "Administrador"
             }
         );
     }

@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppSuporteIA.Models
 {
-    [Table("Cargos", Schema = "dbo")]
     public class Cargo
     {
         [Key]
